@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petaiprogram.mapper.PetbaseinformationMapper">
+
+    <resultMap id="BaseResultMap" type="com.petaiprogram.domain.Petbaseinformation">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="masterid" column="masterID" jdbcType="INTEGER"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="photourl" column="photoUrl" jdbcType="VARCHAR"/>
+            <result property="sex" column="sex" jdbcType="VARCHAR"/>
+            <result property="birthday" column="birthday" jdbcType="VARCHAR"/>
+            <result property="text" column="text" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,masterID,name,
+        photoUrl,sex,birthday,
+        text
+    </sql>
+</mapper>

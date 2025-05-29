@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Chat</title>
+    <style>
+        .container {
+            background-color: #f9f9f9;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: Arial, sans-serif;
+        }
+        .chat-body {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 10px 20px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .chat-one {
+            display: flex;
+            margin: 10px 0;
+            align-items: flex-end;
+        }
+        .chat-one-mine {
+            justify-content: flex-end;
+        }
+        .chat-face {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin: 0 10px;
+        }
+        .chat-box {
+            max-width: 70%;
+            display: flex;
+            align-items: center;
+        }
+        .chat-content {
+            background-color: #e0e0e0;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .chat-one-mine .chat-content {
+            background-color: #0084ff;
+            color: white;
+        }
+        .chat-img {
+            max-width: 100px;
+            border-radius: 10px;
+            margin-top: 5px;
+        }
+        .chat-footer {
+            display: flex;
+            padding: 10px 20px;
+            background-color: #fff;
+            border-top: 1px solid #ddd;
+            align-items: center;
+        }
+        .msg-input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            margin-right: 10px;
+            font-size: 14px;
+        }
+        .send-btn {
+            background-color: #0084ff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .send-btn:hover {
+            background-color: #0077e6;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Chat Body -->
+    <div class="chat-body" id="chatBody"></div>
+    <!-- Chat Footer -->
+    <div class="chat-footer">
+        <input type="text" class="msg-input" id="msgInput" placeholder="Type a message..." />
+        <button class="send-btn" onclick="sendMsg()">发送</button>
+    </div>
+</div>
+
+<script>
+    const doctor = {
+        avatar: 'https://ts1.cn.mm.bing.net/th/id/R-C.ba71c8e745ce17102e0ff3500553d125?rik=XkmXDdGfNoFI2g&riu=http%3a%2f%2fpic10.nipic.com%2f20101014%2f3320946_004717109244_2.jpg&ehk=DiSX52VHinD1ALiBbTCLqDeY73u3H2nWk%2ftt9oXYKUI%3d&risl=&pid=ImgRaw&r=0',
+    };
+
+    const chatList = [];
+
+    // WebSocket
+    const websocket = new WebSocket('ws://localhost:8888/websocket-endpoint');
+
+    websocket.onopen = () => {
+        console.log('WebSocket connection opened');
+    };
+
+    websocket.onmessage = (event) => {
+        try {
+            const message = JSON.parse(event.data);
+            receiveMessage(message);
+        } catch (error) {
+            console.error('Error parsing message:', event.data, error);
+        }
+    };
+
+    websocket.onclose = () => {
+        console.log('WebSocket connection closed');
+    };
+
+    websocket.onerror = (error) => {
+        console.error('WebSocket error:', error);
+    };
+
+    // DOM Elements
+    const chatBody = document.getElementById('chatBody');
+    const msgInput = document.getElementById('msgInput');
+
+    // Functions
+    function renderChat() {
+        chatBody.innerHTML = '';
+        chatList.forEach(item => {
+            const chatOne = document.createElement('div');
+            chatOne.className = 'chat-one' + (item.sender === 'doctor' ? ' chat-one-mine' : '');
+
+            const chatBox = document.createElement('div');
+            chatBox.className = 'chat-box';
+
+            if (item.type === 'txt') {
+                const chatContent = document.createElement('div');
+                chatContent.className = 'chat-content';
+                chatContent.textContent = item.content;
+                chatBox.appendChild(chatContent);
+            } else if (item.type === 'img') {
+                const chatImg = document.createElement('img');
+                chatImg.className = 'chat-img';
+                chatImg.src = item.content;
+                chatBox.appendChild(chatImg);
+            }
+
+            if (item.sender === 'doctor') {
+                const img = document.createElement('img');
+                img.className = 'chat-face';
+                img.src = doctor.avatar;
+                chatOne.appendChild(chatBox);
+                chatOne.appendChild(img);
+            } else {
+                const img = document.createElement('img');
+                img.className = 'chat-face';
+                img.src = 'https://pcapi-xiaotuxian-front-devtest.itheima.net/miniapp/uploads/avatar_3.jpg';
+                chatOne.appendChild(img);
+                chatOne.appendChild(chatBox);
+            }
+
+            chatBody.appendChild(chatOne);
+        });
+    }
+
+    function sendMsg() {
+        const message = msgInput.value.trim();
+        if (message === '') {
+            return;
+        }
+
+        if (websocket && websocket.readyState === WebSocket.OPEN) {
+            const sendMsg = {
+                sender: 'doctor', // 标识消息发送者
+                type: 'txt',
+                content: message,
+            };
+            websocket.send(JSON.stringify(sendMsg));
+            msgInput.value = '';
+            renderChat();
+        } else {
+            console.error('WebSocket connection is not open');
+        }
+    }
+
+    function receiveMessage(message) {
+        chatList.push(message);
+        renderChat();
+    }
+
+    // Initialize
+    function init() {
+        renderChat();
+    }
+
+    init();
+</script>
+</body>
+</html>

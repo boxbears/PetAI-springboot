@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petaiprogram.mapper.DoctorsMapper">
+
+    <resultMap id="BaseResultMap" type="com.petaiprogram.domain.Doctors">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="comava" column="comAva" jdbcType="VARCHAR"/>
+            <result property="comname" column="comName" jdbcType="VARCHAR"/>
+            <result property="comgrade" column="comGrade" jdbcType="VARCHAR"/>
+            <result property="comaddress" column="comAddress" jdbcType="VARCHAR"/>
+            <result property="commain" column="comMain" jdbcType="VARCHAR"/>
+            <result property="cases" column="cases" jdbcType="INTEGER"/>
+            <result property="acclaim" column="acclaim" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,comAva,comName,
+        comGrade,comAddress,comMain,
+        cases,acclaim
+    </sql>
+</mapper>

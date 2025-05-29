@@ -1,0 +1,18 @@
+package com.petaiprogram.domain.goods;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Orders {
+    List<UserAddresses> userAddresses;
+    List<GoodsOrder> goods;
+    Summary summary;
+}
+
+

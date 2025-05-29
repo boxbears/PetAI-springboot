@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petaiprogram.mapper.CommunityMapper">
+
+    <resultMap id="BaseResultMap" type="com.petaiprogram.domain.Community">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="comAva" column="com_ava" jdbcType="VARCHAR"/>
+            <result property="comName" column="com_name" jdbcType="VARCHAR"/>
+            <result property="comIntro" column="com_intro" jdbcType="VARCHAR"/>
+            <result property="titlecontent" column="titleContent" jdbcType="VARCHAR"/>
+            <result property="text" column="text" jdbcType="VARCHAR"/>
+            <result property="comPic" column="com_pic" jdbcType="VARCHAR"/>
+            <result property="concern" column="concern" jdbcType="INTEGER"/>
+            <result property="userid" column="userId" jdbcType="INTEGER"/>
+            <result property="choosepetid" column="choosePetId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,com_ava,com_name,
+        com_intro,titleContent,text,
+        com_pic,concern,userId,
+        choosePetId
+    </sql>
+</mapper>

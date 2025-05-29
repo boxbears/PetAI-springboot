@@ -1,0 +1,13 @@
+package com.petaiprogram.service;
+
+import com.petaiprogram.domain.Guesslike;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+/**
+* @author 27609
+* @description 针对表【guesslike】的数据库操作Service
+* @createDate 2023-12-02 10:54:04
+*/
+public interface GuesslikeService extends IService<Guesslike> {
+
+}

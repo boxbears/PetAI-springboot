@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petaiprogram.mapper.OrderMapper">
+    <insert id="insertOrders">
+        insert into orders(id, createTime, payType, orderState, payLatestTime, postFee, payMoney, totalMoney, totalNum, payChannel, countdown,skuIds,SkuCounts,userId) values
+        (#{id},#{createTime},#{payType},#{orderState},#{payLatestTime},#{postFee},#{payMoney},#{totalMoney},#{totalNum},#{payChannel},#{countdown},#{skuIds},#{SkuCounts},#{userId})
+    </insert>
+    <select id="selectSkus" resultType="com.petaiprogram.domain.goods.Sku">
+        select * from skus where id in
+        <foreach collection="goods" item="good" separator="," open="(" close=")">
+            #{good.skuId}
+        </foreach>
+    </select>
+</mapper>

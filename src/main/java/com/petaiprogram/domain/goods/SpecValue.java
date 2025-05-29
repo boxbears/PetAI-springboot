@@ -1,0 +1,18 @@
+package com.petaiprogram.domain.goods;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class SpecValue {
+    private String name;
+    private String picture;
+    private String desc;
+
+    private String skuId;
+
+    private Integer count;
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petaiprogram.mapper.GoodsMapper">
+
+    <resultMap id="BaseResultMap" type="com.petaiprogram.domain.Goods">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="productId" column="product_id" jdbcType="INTEGER"/>
+            <result property="picurl" column="picUrl" jdbcType="VARCHAR"/>
+            <result property="goodname" column="goodName" jdbcType="VARCHAR"/>
+            <result property="goodprice" column="goodPrice" jdbcType="VARCHAR"/>
+            <result property="text" column="text" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,product_id,picUrl,
+        goodName,goodPrice,text
+    </sql>
+</mapper>
